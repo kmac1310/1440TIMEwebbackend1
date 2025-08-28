@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>1440TIME™ — Free Calibration</title>
-  <meta name="description" content="Join the 1440TIME™ Experience. Get the free 20-second Calibration that helps you feel more time in each minute. Control the clock — control the game." />
+  <meta name="description" content="In 20 seconds, crack the clock — your minutes turn into tokens you control. Join the 1440TIME™ Experience and start your free Calibration." />
   <meta name="theme-color" content="#0b0f1e" />
   <style>
     :root{
@@ -12,8 +12,8 @@
       --panel:#0f1629cc; /* glass */
       --text:#eef2ff;
       --muted:#9aa3b2;
-      --accent: #62e3ff; /* neon cyan */
-      --accent2:#b084ff; /* neon violet */
+      --accent:#62e3ff;   /* neon cyan */
+      --accent2:#b084ff;  /* neon violet */
       --success:#35d07f;
       --danger:#ff6b6b;
       --radius:20px;
@@ -137,9 +137,9 @@
         <div>
           <h1>Own your 1,440 daily tokens. Control the clock — control the game.</h1>
 
-          <!-- UPDATED COPY BELOW -->
-          <p><strong>Step into the 1440TIME™ Experience and try the free Calibration — in just 20 seconds, you’ll feel time stretch and see your day in a whole new way.</strong></p>
-          <!-- END UPDATED COPY -->
+          <!-- UPDATED HERO LINE -->
+          <p><strong>In 20 seconds, crack the clock — your minutes turn into tokens you control.</strong></p>
+          <!-- END UPDATED HERO LINE -->
 
           <div class="console" id="console">
             <!-- SUCCESS PANEL (shown after submission) -->
@@ -219,7 +219,7 @@
       if(isSuccess){
         successPanel.classList.add('show');
         form.classList.add('hide');
-        // Optional: clean the URL so the success state doesn't persist on refresh
+        // Clean the URL so success state doesn't persist on refresh
         if(window.history && window.history.replaceState){
           const url = new URL(window.location.href);
           url.searchParams.delete('success');
