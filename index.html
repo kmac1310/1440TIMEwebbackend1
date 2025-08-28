@@ -1,964 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1440TIME™ - Think Outside the Clock</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #000000, #1a1a2a, #000000);
-            color: white;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px 15px;
-            background: radial-gradient(circle at center, #1a1a2a 0%, #000000 70%);
-        }
-
-        .hero h1 {
-            font-size: clamp(32px, 12vw, 64px);
-            color: #00ff00;
-            text-shadow: 0 0 20px #00ff00, 0 0 40px #00ffff;
-            margin-bottom: 15px;
-            animation: glow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 20px #00ff00, 0 0 40px #00ffff; }
-            to { text-shadow: 0 0 30px #00ff00, 0 0 60px #00ffff, 0 0 80px #00ff00; }
-        }
-
-        .hero h2 {
-            font-size: clamp(18px, 6vw, 28px);
-            color: #ffff00;
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px #ffff00;
-        }
-
-        .countdown {
-            font-size: clamp(48px, 15vw, 80px);
-            color: #ff0000;
-            text-shadow: 0 0 30px #ff0000;
-            margin: 20px 0;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
-        }
-
-        .hero-description {
-            font-size: clamp(14px, 4vw, 18px);
-            color: #aaa;
-            max-width: 90%;
-            margin-bottom: 40px;
-        }
-
-        .hero-description strong {
-            color: #ffff00;
-        }
-
-        .hero-description .control-clock {
-            color: #00ff00;
-            text-shadow: 0 0 15px #00ff00;
-            font-size: clamp(16px, 5vw, 22px);
-            margin-top: 15px;
-            display: block;
-        }
-
-        .section {
-            padding: 40px 15px;
-            max-width: 100%;
-            margin: 0 auto;
-        }
-
-        .problem, .solution, .ancient, .ai-zone {
-            border-radius: 15px;
-            padding: 25px 20px;
-            margin: 30px 0;
-            border: 2px solid;
-        }
-
-        .problem {
-            background: linear-gradient(135deg, #2a0000, #1a0000);
-            border-color: #ff0000;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
-        }
-
-        .solution {
-            background: linear-gradient(135deg, #002a00, #001a00);
-            border-color: #00ff00;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
-        }
-
-        .ancient {
-            background: linear-gradient(135deg, #2a2a00, #1a1a00);
-            border-color: #ffaa00;
-            box-shadow: 0 0 30px rgba(255, 170, 0, 0.3);
-        }
-
-        .ai-zone {
-            background: linear-gradient(135deg, #2a002a, #1a001a);
-            border-color: #ff00ff;
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
-        }
-
-        h2 {
-            font-size: clamp(22px, 7vw, 36px);
-            margin-bottom: 20px;
-            text-align: center;
-            line-height: 1.2;
-        }
-
-        h3 {
-            font-size: clamp(18px, 5.5vw, 26px);
-            margin-bottom: 15px;
-            text-align: center;
-            line-height: 1.3;
-        }
-
-        h4 {
-            font-size: clamp(16px, 4.5vw, 20px);
-            margin-bottom: 12px;
-        }
-
-        p, li {
-            font-size: clamp(14px, 4vw, 16px);
-            line-height: 1.5;
-        }
-
-        .comparison {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .old-way, .new-way {
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .old-way {
-            background: linear-gradient(135deg, #331111, #221111);
-            border: 2px solid #ff6666;
-        }
-
-        .new-way {
-            background: linear-gradient(135deg, #113311, #112211);
-            border: 2px solid #66ff66;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
-            margin: 30px 0;
-        }
-
-        .stat-box {
-            background: linear-gradient(135deg, #1a1a2a, #2a2a4a);
-            padding: 20px 15px;
-            border-radius: 12px;
-            text-align: center;
-            border: 2px solid #4a4aff;
-            transition: transform 0.3s ease;
-        }
-
-        .stat-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(74, 74, 255, 0.4);
-        }
-
-        .stat-number {
-            font-size: clamp(24px, 8vw, 36px);
-            color: #ffff00;
-            font-weight: bold;
-            text-shadow: 0 0 15px #ffff00;
-        }
-
-        .stat-box p {
-            font-size: clamp(12px, 3.5vw, 14px);
-            margin-top: 8px;
-        }
-
-        .cta {
-            background: linear-gradient(135deg, #ff0000, #cc0000);
-            padding: 40px 25px;
-            border-radius: 15px;
-            text-align: center;
-            margin: 40px 0;
-            border: 2px solid #ffff00;
-            box-shadow: 0 0 40px rgba(255, 255, 0, 0.5);
-        }
-
-        .cta ul {
-            text-align: left;
-            max-width: 100%;
-            margin: 20px 0;
-            padding-left: 20px;
-        }
-
-        .cta li {
-            margin: 10px 0;
-            font-size: clamp(13px, 3.8vw, 15px);
-        }
-
-        .testimonial {
-            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
-            border-left: 4px solid #00ff00;
-            font-style: italic;
-        }
-
-        .wizard-quote {
-            background: linear-gradient(135deg, #2a1a2a, #4a2a4a);
-            padding: 30px 20px;
-            border-radius: 15px;
-            text-align: center;
-            margin: 30px 0;
-            border: 2px solid #ff4aff;
-            box-shadow: 0 0 30px rgba(255, 74, 255, 0.3);
-        }
-
-        .token-display {
-            font-size: clamp(40px, 12vw, 70px);
-            color: #ffaa00;
-            text-shadow: 0 0 20px #ffaa00;
-            text-align: center;
-            margin: 25px 0;
-        }
-
-        .final-call {
-            background: linear-gradient(135deg, #000000, #1a1a2a, #000000);
-            padding: 40px 20px;
-            text-align: center;
-            border-top: 3px solid #00ff00;
-        }
-
-        .matrix-section {
-            background: linear-gradient(135deg, #001100, #003300, #001100);
-            padding: 40px 20px;
-            border-radius: 15px;
-            text-align: center;
-            margin: 30px 0;
-            border: 2px solid #00ff00;
-            box-shadow: 0 0 40px rgba(0, 255, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .matrix-title {
-            color: #00ff00;
-            text-shadow: 0 0 20px #00ff00;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 1px;
-            margin-bottom: 30px;
-            font-size: clamp(18px, 6vw, 28px);
-        }
-
-        .wizard-quote-text {
-            font-size: clamp(18px, 5.5vw, 24px);
-            font-style: italic;
-            margin: 20px 0;
-            color: #00ff00;
-            text-shadow: 0 0 15px #00ff00;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 0.5px;
-            line-height: 1.4;
-        }
-
-        .choice-matrix {
-            margin: 40px 0;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid #00ff00;
-            border-radius: 10px;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
-        }
-
-        .think-outside-clock {
-            font-size: clamp(24px, 8vw, 40px);
-            color: #00ff00;
-            text-shadow: 0 0 30px #00ff00;
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        .system-status {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 30px 20px;
-            border-radius: 12px;
-            border: 1px solid #00ff00;
-            margin: 30px 0;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.2);
-        }
-
-        .final-countdown {
-            color: #00ff00;
-            font-size: clamp(28px, 8vw, 48px);
-            font-family: 'Courier New', monospace;
-            text-shadow: 0 0 30px #00ff00;
-            animation: pulse 1.5s infinite;
-            margin: 20px 0;
-        }
-
-        /* 1440X Future Section Mobile Optimization */
-        .future-section {
-            margin-top: 50px;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #0a0a2a 0%, #1a1a4a 50%, #0a0a2a 100%);
-            border-radius: 15px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .future-1440x {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-        }
-
-        .main-1440x {
-            font-size: clamp(48px, 18vw, 100px);
-            font-weight: 900;
-            color: #ffffff;
-            text-shadow: 0 0 30px rgba(255,255,255,0.8);
-            margin-bottom: 20px;
-            letter-spacing: -0.02em;
-            font-family: Arial, sans-serif;
-        }
-
-        .main-1440x .x-accent {
-            color: #ff00ff;
-            text-shadow: 0 0 30px #ff00ff;
-            position: relative;
-        }
-
-        .future-tagline {
-            font-size: clamp(16px, 6vw, 24px);
-            font-weight: 700;
-            color: #ffffff;
-            text-shadow: 0 0 20px rgba(255,255,255,0.8);
-            letter-spacing: 0.05em;
-            margin-top: 20px;
-            line-height: 1.2;
-        }
-
-        .future-tagline .yellow-accent {
-            color: #ffff00;
-            text-shadow: 0 0 20px #ffff00;
-        }
-
-        .animated-bars {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .animated-bar {
-            width: 40px;
-            height: 3px;
-            border-radius: 2px;
-            animation: pulse 2s infinite;
-        }
-
-        .bar-1 {
-            background: linear-gradient(90deg, #00ff00, #ffff00);
-            box-shadow: 0 0 10px #00ff00;
-        }
-
-        .bar-2 {
-            background: linear-gradient(90deg, #ffff00, #ff00ff);
-            box-shadow: 0 0 10px #ffff00;
-            animation-delay: 0.5s;
-        }
-
-        .bar-3 {
-            background: linear-gradient(90deg, #ff00ff, #00ffff);
-            box-shadow: 0 0 10px #ff00ff;
-            animation-delay: 1s;
-        }
-
-        /* Ancient section list styling */
-        .ancient ul {
-            text-align: left;
-            max-width: 100%;
-            margin: 20px 0;
-            padding-left: 0;
-            list-style: none;
-        }
-
-        .ancient li {
-            margin: 15px 0;
-            padding-left: 20px;
-            position: relative;
-        }
-
-        .ancient li::before {
-            content: "⏳";
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
-
-        /* CTA section improvements */
-        .cta-content {
-            background: rgba(0,0,0,0.5);
-            padding: 25px 20px;
-            border-radius: 12px;
-            margin: 25px 0;
-        }
-
-        .cta-title {
-            font-size: clamp(16px, 5vw, 20px);
-            margin-bottom: 15px;
-        }
-
-        /* Touch-friendly interactive elements */
-        .stat-box {
-            min-height: 100px;
-            cursor: pointer;
-        }
-
-        /* Improved readability */
-        .comparison p {
-            margin: 8px 0;
-        }
-
-        .comparison em {
-            font-style: normal;
-            opacity: 0.9;
-        }
-
-        /* Better spacing for mobile */
-        .wizard-quote p:first-of-type {
-            font-size: clamp(18px, 5.5vw, 22px);
-        }
-
-        .wizard-quote p:last-of-type {
-            font-size: clamp(14px, 4vw, 16px);
-            color: #ccc;
-            margin-top: 15px;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>1440TIME™ — Free Calibration</title>
+  <meta name="description" content="In 20 seconds, crack the clock — your minutes turn into tokens you control. Join the 1440TIME™ Experience and start your free Calibration." />
+  <meta name="theme-color" content="#0b0f1e" />
+  <style>
+    :root{
+      --bg:#0b0f1e;
+      --panel:#0f1629cc; /* glass */
+      --text:#eef2ff;
+      --muted:#9aa3b2;
+      --accent:#62e3ff;   /* neon cyan */
+      --accent2:#b084ff;  /* neon violet */
+      --success:#35d07f;
+      --danger:#ff6b6b;
+      --radius:20px;
+      --shadow:0 8px 40px rgba(0,0,0,.45), 0 0 40px rgba(98,227,255,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text); background: radial-gradient(1200px 700px at 20% 10%, #102344 0%, #0b1022 45%, var(--bg) 100%) fixed;
+      display:flex; align-items:center; justify-content:center; padding:24px;
+    }
+    .wrap{width:min(960px,100%);}
+    .card{
+      background: linear-gradient(180deg, rgba(20,28,54,.65), rgba(10,15,30,.65));
+      border:1px solid rgba(142,151,175,.2);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      backdrop-filter: blur(8px);
+    }
+    header{
+      padding:28px 28px 0;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      font-weight:800; letter-spacing:.3px;
+    }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background:
+        radial-gradient(120% 120% at 20% 20%, var(--accent) 0%, transparent 60%),
+        radial-gradient(120% 120% at 80% 80%, var(--accent2) 0%, transparent 60%),
+        #0d1429;
+      box-shadow: 0 0 18px rgba(98,227,255,.5), inset 0 0 10px rgba(176,132,255,.35);
+    }
+    .tm{opacity:.85; font-weight:700}
+    .tag{color:var(--muted); font-size:.9rem}
+    .content{
+      display:grid; grid-template-columns: 1.15fr .85fr; gap:24px; padding:28px;
+    }
+    @media (max-width: 880px){ .content{ grid-template-columns: 1fr; } }
+    h1{
+      margin:0 0 10px 0; font-size: clamp(1.4rem, 2.6vw, 2rem);
+      font-weight:800;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      text-shadow: 0 0 18px rgba(98,227,255,.25);
+    }
+    p{margin:10px 0; color:var(--muted); line-height:1.55}
+    .pill{
+      display:inline-block; font-size:.85rem; padding:6px 10px; border-radius:999px;
+      background: linear-gradient(90deg, rgba(98,227,255,.14), rgba(176,132,255,.12));
+      border:1px solid rgba(142,151,175,.26);
+      color:#dfe7ff;
+    }
+
+    /* Time Console (form) */
+    .console{
+      background: linear-gradient(180deg, rgba(20,28,54,.5), rgba(10,15,30,.5));
+      border:1px solid rgba(142,151,175,.24);
+      border-radius: 16px; padding:18px; margin-top:14px;
+      box-shadow: inset 0 0 25px rgba(98,227,255,.06), 0 0 30px rgba(176,132,255,.05);
+    }
+    form{ display:grid; gap:14px; }
+    label{ font-size:.95rem; color:#dbe4ff }
+    input[type="email"]{
+      width:100%; padding:14px 14px; border-radius:12px; border:1px solid rgba(142,151,175,.3);
+      background:#0b1122; color:var(--text); outline:none;
+      box-shadow: inset 0 0 12px rgba(0,0,0,.35), 0 0 0 3px transparent;
+      transition: box-shadow .2s, border-color .2s;
+    }
+    input[type="email"]:focus{
+      border-color: rgba(98,227,255,.7);
+      box-shadow: 0 0 0 3px rgba(98,227,255,.18);
+    }
+    .row{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    .muted{ color:var(--muted); font-size:.85rem }
+    .btn{
+      cursor:pointer; border:none; padding:14px 16px; border-radius:12px;
+      font-weight:800; letter-spacing:.3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      color:#031220;
+      box-shadow: 0 10px 28px rgba(98,227,255,.25), 0 0 40px rgba(176,132,255,.25);
+      transition: transform .08s ease, filter .2s;
+    }
+    .btn:active{ transform: translateY(1px) }
+    .fineprint{ font-size:.78rem; color:#9aa3b2; }
+    .hide{ display:none !important }
+
+    /* Success panel */
+    .success{
+      display:none; padding:22px; border-radius:14px; border:1px solid rgba(53,208,127,.35);
+      background: linear-gradient(180deg, rgba(13,30,22,.6), rgba(11,24,20,.6));
+      box-shadow: inset 0 0 25px rgba(53,208,127,.1), 0 0 24px rgba(53,208,127,.08);
+      margin-top:14px;
+    }
+    .success.show{ display:block }
+    .success h3{ margin:0 0 8px 0; color:#a9f2c9 }
+    .success p{ color:#cfeee0 }
+    .linklike{ color:var(--accent); text-decoration:underline; cursor:pointer }
+    footer{ padding:0 28px 24px; color:#7f8aa5; font-size:.85rem; }
+  </style>
 </head>
 <body>
-    <!-- HERO SECTION -->
-    <div class="hero">
-        <h1>1440TIME™</h1>
-        <h2>Think Outside the Clock</h2>
-        <div class="countdown" id="countdown">1440</div>
-        <p class="hero-description">
-            <strong style="color: white; font-weight: bold;">Every day you get exactly 1,440 minutes. No more, no less.<br>
-            The question isn't how you spend your time...</strong><br>
-            <strong>It's how you INVEST your tokens.</strong><br>
-            <strong class="control-clock">Control the Clock - Control the Game</strong>
-        </p>
-        
-        <!-- 1440X FUTURE SECTION -->
-        <div class="future-section">
-            <div class="future-1440x">
-                <div class="main-1440x">
-                    1440<span class="x-accent">X</span>
-                </div>
-                
-                <div class="future-tagline">
-                    THE FUTURE OF TIME<br>
-                    <span class="yellow-accent">STARTS NOW</span><br>
-                    <span style="font-size: clamp(12px, 4vw, 16px); color: #ff00ff; text-shadow: 0 0 15px #ff00ff; margin-top: 10px; display: block; font-weight: 600;">20% AI ALLOCATION = 100X ACCELERATION</span>
-                </div>
-                
-                <!-- Animated elements -->
-                <div class="animated-bars">
-                    <div class="animated-bar bar-1"></div>
-                    <div class="animated-bar bar-2"></div>
-                    <div class="animated-bar bar-3"></div>
-                </div>
-            </div>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <div class="tm">1440TIME™</div>
+            <div class="tag">Think Outside the Clock</div>
+          </div>
         </div>
-    </div>
+        <span class="pill">Free Calibration • 20 seconds</span>
+      </header>
 
-    <!-- THE PROBLEM -->
-    <div class="section">
-        <div class="problem">
-            <h2 style="color: #ff6666;">🚨 THE ANCIENT TIME TRAP</h2>
-            
-            <h3>You're Using 6,000-Year-Old Technology</h3>
-            
-            <div class="ancient">
-                <h3 style="color: #ffaa00;">⏳ Ancient Time Processing:</h3>
-                <ul>
-                    <li><strong>Egyptians (4000 BC):</strong> <em>"Twelve hours of light and twelve hours of darkness. The 12/12 repeat clock used today..."</em></li>
-                    <li><strong>Caesar (46 BC):</strong> <em>"I must have a month named after me, July, with 31 days! And I am Augustus! I must also have a month named after me, August, and I too will have 31 days!!!"</em></li>
-                    <li><strong>Pope Gregory XIV (1582 AD):</strong> <em>"Leap Year! Every day is always the same."</em> <strong>(This is STILL the clock and calendar system we are using in 2025!)</strong></li>
-                </ul>
-            </div>
-            
-            <h3 style="color: #ff6666;">The Result: Stone Age Time Processing</h3>
-            <div class="comparison">
-                <div class="old-way">
-                    <h4>❌ 56k Modem Thinking</h4>
-                    <p><em>"I have 3 hours of free time to spend"</em></p>
-                    <p><em>"I have no time after work"</em></p>
-                    <p><em>"I spend my time watching TV"</em></p>
-                    <p style="color: #ff6666;"><strong>CHUNKY • SLOW • INEFFICIENT</strong></p>
-                </div>
-                <div class="new-way">
-                    <h4>✅ Fiber Optic Thinking</h4>
-                    <p><em>"I have 180 tokens to invest"</em></p>
-                    <p><em>"I have 420 ON-TIME™ tokens"</em></p>
-                    <p><em>"I'm a token investor"</em></p>
-                    <p style="color: #66ff66;"><strong>PRECISE • FAST • MAXIMIZED</strong></p>
-                </div>
-            </div>
-        </div>
-    </div>
+      <section class="content" aria-label="Hero and Sign-up">
+        <div>
+          <h1>Own your 1,440 daily tokens. Control the clock — control the game.</h1>
 
-    <!-- THE SOLUTION -->
-    <div class="section">
-        <div class="solution">
-            <h2 style="color: #66ff66;">💡 THE 1440TIME™ REVOLUTION</h2>
-            
-            <h3>Simply Turn Hours Into Minutes and Watch them Countdown</h3>
-            <p style="text-align: center; margin: 25px 0; font-size: clamp(16px, 4.5vw, 18px);">
-                <strong>Just like sunlight counts down from sunrise to sunset...<br>
-                Your day counts down from 1440 to 0.</strong>
-            </p>
-            
-            <div class="token-display">🪙 1,440 → 0 🪙</div>
-            
-            <div class="stats">
-                <div class="stat-box">
-                    <div class="stat-number">1,440</div>
-                    <p>Daily Token Allowance</p>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-number">10,080</div>
-                    <p>Weekly Token Budget</p>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-number">43,200</div>
-                    <p>Monthly Token Budget</p>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-number">525,600</div>
-                    <p>Annual Token Investment</p>
-                </div>
-            </div>
-            
-            <p style="text-align: center; margin: 30px 0; color: #aaa; font-style: italic;">
-                ↑ Universal Time Calibration (Educational)
-            </p>
-        </div>
-    </div>
+          <!-- UPDATED HERO LINE -->
+          <p><strong>In 20 seconds, crack the clock — your minutes turn into tokens you control.</strong></p>
+          <!-- END UPDATED HERO LINE -->
 
-    <!-- ON-TIME CALCULATOR -->
-    <div class="section">
-        <div class="solution">
-            <h2 style="color: #66ff66;">🔍 YOUR ON-TIME™ CALCULATOR</h2>
-            
-            <h3>Discover Your Daily Opportunity Tokens</h3>
-            <p style="text-align: center; margin: 25px 0; color: #ffff00; font-size: clamp(16px, 4.5vw, 18px);">
-                <strong>Find out exactly how many ON-TIME™ tokens you have available!</strong>
-            </p>
-            
-            <div style="background: linear-gradient(135deg, #003300, #004400); padding: 30px 20px; border-radius: 15px; margin: 30px 0; border: 2px solid #66ff66; box-shadow: 0 0 30px rgba(102, 255, 102, 0.3);">
-                <div style="display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 400px; margin: 0 auto;">
-                    <div>
-                        <label style="display: block; color: #66ff66; font-size: clamp(14px, 4vw, 16px); margin-bottom: 8px; font-weight: bold;">Sleep Hours per Day:</label>
-                        <input type="number" id="sleepHours" min="4" max="12" value="7" style="width: 100%; padding: 12px; border: 2px solid #66ff66; border-radius: 8px; background: #001100; color: white; font-size: clamp(16px, 4.5vw, 18px); text-align: center;">
-                        <p style="color: #aaa; font-size: clamp(12px, 3.5vw, 13px); margin-top: 5px; text-align: center;">Minutes: <span id="sleepMinutes">420</span></p>
-                    </div>
-                    
-                    <div>
-                        <label style="display: block; color: #66ff66; font-size: clamp(14px, 4vw, 16px); margin-bottom: 8px; font-weight: bold;">Work + Commute Hours per Day:</label>
-                        <input type="number" id="workHours" min="0" max="16" value="0" step="0.5" style="width: 100%; padding: 12px; border: 2px solid #66ff66; border-radius: 8px; background: #001100; color: white; font-size: clamp(16px, 4.5vw, 18px); text-align: center;">
-                        <p style="color: #aaa; font-size: clamp(12px, 3.5vw, 13px); margin-top: 5px; text-align: center;">Minutes: <span id="workMinutes">0</span></p>
-                    </div>
-                </div>
-                
-                <div style="text-align: center; margin: 30px 0;">
-                    <div style="background: linear-gradient(135deg, #004400, #006600); padding: 25px 20px; border-radius: 12px; border: 2px solid #88ff88; box-shadow: 0 0 25px rgba(136, 255, 136, 0.4);">
-                        <h3 style="color: #88ff88; margin-bottom: 15px; font-size: clamp(18px, 5.5vw, 24px);">Your Daily ON-TIME™ Tokens:</h3>
-                        <div id="ontimeTokens" style="font-size: clamp(48px, 12vw, 72px); color: #ffff00; text-shadow: 0 0 30px #ffff00; font-weight: bold; margin: 15px 0;">1020</div>
-                        <p style="color: white; font-weight: bold; font-size: clamp(14px, 4vw, 16px);">
-                            The difference maker in life! It's the only time you have to change, improve, learn and conquer goals.
-                        </p>
-                        <p style="color: #66ff66; font-size: clamp(16px, 4.5vw, 18px); font-weight: bold; margin-top: 15px;">
-                            And understand... you still have in your budget <span id="weeklyTokens" style="color: #ffff00;">4,440</span> tokens left in the week to work that GOAL!
-                        </p>
-                        <p style="color: #aaa; font-size: clamp(12px, 3.5vw, 13px); margin-top: 10px; font-style: italic;">
-                            *Based on 5 work days + 2 days off (weekends assume same sleep hours, no work)
-                        </p>
-                    </div>
-                </div>
-                
-                <p style="text-align: center; color: #ffccff; font-size: clamp(14px, 4vw, 16px); margin-top: 20px;">
-                    <strong>Now you know exactly how many opportunity tokens you have to invest!</strong>
-                </p>
+          <div class="console" id="console">
+            <!-- SUCCESS PANEL (shown after submission) -->
+            <div class="success" id="successPanel" role="status" aria-live="polite">
+              <h3>You're in, Time Traveler ✅</h3>
+              <p>We received your request. Check your inbox shortly for access to the free Calibration and first steps inside the 1440TIME™ Experience.</p>
+              <p class="fineprint">Didn’t get it? Check spam or <span class="linklike" id="resetLink">submit again</span>.</p>
             </div>
-        </div>
-    </div>
 
-    <!-- THE AWAKENING -->
-    <div class="section">
-        <div class="wizard-quote">
-            <h2 style="color: #ff4aff;">🧙‍♂️ The Time Wizard's Awakening</h2>
-            <p style="font-size: clamp(18px, 5.5vw, 22px); font-style: italic; margin: 20px 0;">
-                "Unfortunately, no one can be told what 1440TIME™ is.<br>
-                You have to feel it for yourself."
-            </p>
-            <p style="font-size: clamp(14px, 4vw, 16px); color: #ccc;">
-                When you realize you wake up with 1,020 fresh tokens every day...<br>
-                Everything changes.
-            </p>
-        </div>
-        
-        <div class="comparison">
-            <div class="old-way">
-                <h4>❌ Before 1440TIME™</h4>
-                <p><em>"I'm too busy"</em></p>
-                <p><em>"I have no time"</em></p>
-                <p><em>"My schedule is packed"</em></p>
-                <p><em>"Maybe someday..."</em></p>
-            </div>
-            <div class="new-way">
-                <h4>✅ After 1440TIME™</h4>
-                <p><em>"I have 840 tokens today"</em></p>
-                <p><em>"How should I invest them?"</em></p>
-                <p><em>"I'm a time investor"</em></p>
-                <p><em>"Today I build my future"</em></p>
-            </div>
-        </div>
-    </div>
+            <!-- NETLIFY FORM -->
+            <form name="calibration" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/?success=true" id="calibrationForm" aria-describedby="formHelp">
+              <!-- Required hidden form-name for Netlify -->
+              <input type="hidden" name="form-name" value="calibration" />
+              <!-- Honeypot field to reduce spam -->
+              <p class="hide">
+                <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+              </p>
 
-    <!-- THE 1440X AI ZONE -->
-    <div class="section">
-        <div class="ai-zone">
-            <h2 style="color: #ff66ff;">🤖 THE 1440X AI ACCELERATION ZONE</h2>
-            
-            <h3>The Game-Changing 20% Rule</h3>
-            <p style="text-align: center; margin: 25px 0; font-size: clamp(16px, 4.5vw, 18px);">
-                <strong>20% of your ON-TIME™ tokens → AI tools<br>
-                = 100X faster results in 2025 and beyond</strong>
-            </p>
-            
-            <div class="stats">
-                <div class="stat-box">
-                    <div class="stat-number">20%</div>
-                    <p>AI Acceleration Tokens</p>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-number">100X</div>
-                    <p>Results Multiplier</p>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-number">80%</div>
-                    <p>Pure ON-TIME™ Remaining</p>
-                </div>
-            </div>
-            
-            <p style="text-align: center; color: #ffccff; font-size: clamp(14px, 4vw, 16px);">
-                <strong>Use AI for:</strong> Writing • Coding • Research • Planning<br>
-                <strong>While others think in hours, you accelerate with tokens!</strong>
-            </p>
-        </div>
-    </div>
+              <div>
+                <label for="email">Email address</label>
+                <input id="email" name="email" type="email" inputmode="email" placeholder="you@example.com" autocomplete="email" required />
+              </div>
 
-    <!-- ON-TIME™ EXPLANATION -->
-    <div class="section">
-        <div class="solution">
-            <h2 style="color: #66ff66;">⚡ ON-TIME™: The Difference Maker</h2>
-            
-            <p style="text-align: center; margin: 25px 0; color: #ffff00; font-size: clamp(18px, 5vw, 22px);">
-                <strong>ON-TIME™ isn't "free time"<br>
-                ON-TIME™ is OPPORTUNITY TIME<br>
-                For those who want MORE out of life</strong>
-            </p>
-            
-            <div class="comparison">
-                <div class="old-way">
-                    <h4>❌ 80%ers Think</h4>
-                    <p><em>"Free time = Netflix"</em></p>
-                    <p><em>"I deserve to relax"</em></p>
-                    <p><em>"I'll start Monday"</em></p>
-                </div>
-                <div class="new-way">
-                    <h4>✅ 20%ers Think</h4>
-                    <p><em>"ON-TIME™ = Empire building"</em></p>
-                    <p><em>"Time to invest in dreams"</em></p>
-                    <p><em>"I start RIGHT NOW"</em></p>
-                </div>
-            </div>
-            
-            <div class="testimonial">
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <h4 style="color: #66ff66; font-size: clamp(18px, 5vw, 22px); margin-bottom: 15px;">🤖 Your Personal AI Acceleration Plan</h4>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
-                        <div style="background: linear-gradient(135deg, #2a002a, #4a2a4a); padding: 20px; border-radius: 12px; border: 2px solid #ff66ff;">
-                            <div style="font-size: clamp(24px, 7vw, 32px); color: #ff66ff; font-weight: bold;" id="dailyAI">108</div>
-                            <p style="font-size: clamp(12px, 3.5vw, 14px); color: #ffccff;">Daily AI Tokens<br>(20% of ON-TIME)</p>
-                        </div>
-                        <div style="background: linear-gradient(135deg, #2a002a, #4a2a4a); padding: 20px; border-radius: 12px; border: 2px solid #ff66ff;">
-                            <div style="font-size: clamp(24px, 7vw, 32px); color: #ff66ff; font-weight: bold;" id="weeklyAI">948</div>
-                            <p style="font-size: clamp(12px, 3.5vw, 14px); color: #ffccff;">Weekly AI Budget<br>(20% of ON-TIME)</p>
-                        </div>
-                    </div>
-                </div>
-                <p style="text-align: center; color: #ffccff; font-size: clamp(14px, 4vw, 16px);">
-                    <strong>These are your SACRED MINUTES - the X Factor that separates you from everyone else!</strong><br>
-                    <strong>What once took hours now takes tokens. AI has changed the course of human history!</strong><br>
-                    <strong style="color: #ff66ff;">Those tokens you see? You must OWN them. Control them. Invest them.</strong>
-                </p>
-            </div>
-        </div>
-    </div>
+              <div class="row">
+                <button class="btn" type="submit">Start Calibration — Free</button>
+                <span class="muted" id="formHelp">By submitting, you’ll receive the free Calibration and occasional 1440TIME™ updates. Unsubscribe anytime.</span>
+              </div>
+            </form>
+          </div>
 
-    <!-- THE TRANSFORMATION -->
-    <div class="section">
-        <div class="problem">
-            <h2 style="color: #ffff00;">🎯 THE BRUTAL REALITY CHECK</h2>
-            
-            <p style="text-align: center; margin: 25px 0; font-size: clamp(18px, 5vw, 22px);">
-                <strong>Even with a full-time job...<br>
-                You have <span id="brutalWeeklyTokens">4,140</span>+ tokens per week for YOUR dreams</strong>
-            </p>
-            
-            <p style="text-align: center; margin: 15px 0; color: #aaa; font-size: clamp(13px, 3.5vw, 14px);">
-                (Based on your current schedule: <span id="brutalWorkHours">10</span> hours work/day and <span id="brutalSleepHours">7</span> hours sleep/day)
-            </p>
-            
-            <div class="stats">
-                <div class="stat-box">
-                    <div class="stat-number" id="brutalWeeklyDisplay">4,140</div>
-                    <p>Weekly ON-TIME™ Tokens<br>(Based on your schedule)</p>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-number" id="brutalHoursDisplay">69</div>
-                    <p>Hours Per Week<br>Of Pure Opportunity</p>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-number" id="brutalAIDisplay">1,008</div>
-                    <p>Weekly AI Tokens<br>(20% Acceleration)</p>
-                </div>
-            </div>
-            
-            <h3 style="color: #ff0000;">⚠️ NO MORE EXCUSES!</h3>
-            <p style="text-align: center; font-size: clamp(16px, 4.5vw, 18px);">
-                The time is there. The tokens exist.<br>
-                <strong>How will you invest your precious tokens?</strong>
-            </p>
+          <p class="fineprint">No apps to install. Works in your browser. Takes ~20 seconds.</p>
         </div>
-    </div>
 
-    <!-- CALL TO ACTION -->
-    <div class="section">
-        <div class="cta">
-            <h2 style="color: #ffff00;">🚀 READY TO THINK OUTSIDE THE CLOCK?</h2>
-            
-            <p style="margin: 25px 0; font-size: clamp(18px, 5vw, 22px);">
-                <strong>Stop using 6,000-year-old time technology.<br>
-                Start living in the age of TOKEN PRECISION.</strong>
-            </p>
-            
-            <div class="cta-content">
-                <h3 class="cta-title">The 1440TIME™ System Includes:</h3>
-                <ul>
-                    <li><strong>Core Philosophy</strong> – 1,440 tokens per day. Tokens are concrete, time is abstract. Own what you spend it on.</li>
-                    <li><strong>Calibration Ladder</strong> – From nanoseconds to minutes. Train your perception with <em>perceptional contrast</em> to slow time down.</li>
-                    <li><strong>The Trilogy of Time</strong> – Life Clock (GPS), 1440 Power System (daily blueprint), and CVT (Compound Value of Time).</li>
-                    <li><strong>The 3 Power Zones</strong> – Sleep Zone, Livelihood Zone, and your On-Time Zone (PT + PTP + 1440X-AI).</li>
-                    <li><strong>Key Concepts</strong> – TAS (Time Awareness System), CVT rule (15–20 min/day = mastery), and the Digital Sundial countdown.</li>
-                    <li><strong>Meta Tools & Mindset</strong> – Break free from the Clock Matrix, shift from scarcity to abundance, tokenization awareness, and 1440TIME Apps that bring it all to life.</li>
-                </ul>
-            </div>
-            
-            <p style="color: #ffff00; margin: 25px 0; font-size: clamp(20px, 6vw, 26px);">
-                <strong>Transform from time victim to token investor!</strong>
-            </p>
+        <!-- Simple value props -->
+        <div>
+          <div class="console">
+            <h3 style="margin:0 0 8px 0;">What you get</h3>
+            <ul style="margin:8px 0 0 18px; line-height:1.6; color:#cbd5e1;">
+              <li>Free 20-second Calibration demo</li>
+              <li>Tokens vs. minutes — a fresh mental model</li>
+              <li>The 1440 Power System (Sleep • Livelihood • On-Time)</li>
+              <li>Early access to watch faces & apps</li>
+            </ul>
+          </div>
+          <div class="console" style="margin-top:14px;">
+            <h3 style="margin:0 0 8px 0;">Why it matters</h3>
+            <p style="margin:0;color:#cbd5e1;">When you see minutes as tokens, every choice sharpens. Calibration makes time feel slower—so your On-Time goes further.</p>
+          </div>
         </div>
-    </div>
+      </section>
 
-    <!-- FINAL WISDOM -->
-    <div class="final-call">
-        <div class="matrix-section">
-            <h2 class="matrix-title">⚡ FINAL TRANSMISSION FROM THE TIME WIZARD</h2>
-            
-            <div class="future-1440x">
-                <p class="wizard-quote-text">
-                    "Take the <span style="color: #ff0000; text-shadow: 0 0 20px #ff0000;">red token</span>...<br>
-                    and I show you how deep your 1440TIME™ really goes."
-                </p>
-                
-                <div class="choice-matrix">
-                    <div class="think-outside-clock">
-                        THINK OUTSIDE THE CLOCK
-                    </div>
-                    <p style="color: #00ff00; font-family: 'Courier New', monospace; font-size: clamp(14px, 4vw, 16px); opacity: 0.8; margin-top: 15px;">- SYSTEM ARCHITECT: THE TIME WIZARD</p>
-                </div>
-                
-                <div class="system-status">
-                    <p style="margin: 15px 0; color: #ffffff; font-family: 'Courier New', monospace; line-height: 1.6; font-size: clamp(16px, 4.5vw, 20px);">
-                        <span style="color: #ff0000; text-shadow: 0 0 10px #ff0000;">CHOICE MATRIX LOADING...</span><br><br>
-                        <span style="color: #00ff00;">[OPTION 1]</span> Stay trapped in Caesar's calendar...<br>
-                        <span style="color: #00ff00;">[OPTION 2]</span> Or awaken to your 1,440 daily tokens.
-                    </p>
-                </div>
-                
-                <div style="background: #000000; padding: 25px 15px; border-radius: 10px; border: 2px solid #00ff00; box-shadow: 0 0 40px rgba(0, 255, 0, 0.4); margin: 25px 0;">
-                    <div class="final-countdown" id="finalCountdown">
-                        TOKENS REMAINING...
-                    </div>
-                    <p style="color: #00ff00; font-family: 'Courier New', monospace; font-size: clamp(14px, 4vw, 16px); margin-top: 15px; opacity: 0.9;">
-                        >> SYSTEM STATUS: ACTIVE<br>
-                        >> TIME MATRIX: BYPASSED<br>
-                        >> YOUR CHOICE: PENDING...
-                    </p>
-                </div>
-            </div>
-        </div>
+      <footer>
+        © <span id="year"></span> 1440TIME™ — All rights reserved.
+      </footer>
     </div>
+  </div>
 
-    <script>
-        // Live countdown demonstration
-        function updateCountdown() {
-            const now = new Date();
-            const endOfDay = new Date(now);
-            endOfDay.setHours(23, 59, 59, 999);
-            const minutesLeft = Math.floor((endOfDay - now) / 60000) + 1;
-            
-            document.getElementById('countdown').textContent = minutesLeft;
-            document.getElementById('finalCountdown').textContent = minutesLeft + ' tokens remaining today';
-            
-            // Only update if element exists
-            const revolutionDaily = document.getElementById('revolutionDaily');
-            if (revolutionDaily) {
-                revolutionDaily.textContent = minutesLeft;
-            }
+  <noscript>
+    <style>.hide{display:block!important}.success{display:none!important}</style>
+    <div style="max-width:720px;margin:16px auto;color:#ffb4b4">
+      JavaScript is disabled. The form still submits to Netlify, but you won’t see the in-page success message.
+    </div>
+  </noscript>
+
+  <script>
+    // Success-state toggle based on URL param
+    (function(){
+      const params = new URLSearchParams(window.location.search);
+      const isSuccess = params.get('success') === 'true';
+      const successPanel = document.getElementById('successPanel');
+      const form = document.getElementById('calibrationForm');
+      const resetLink = document.getElementById('resetLink');
+      const year = document.getElementById('year');
+
+      year.textContent = new Date().getFullYear();
+
+      if(isSuccess){
+        successPanel.classList.add('show');
+        form.classList.add('hide');
+        // Clean the URL so success state doesn't persist on refresh
+        if(window.history && window.history.replaceState){
+          const url = new URL(window.location.href);
+          url.searchParams.delete('success');
+          window.history.replaceState({}, '', url.pathname);
         }
+      }
 
-        // ON-TIME Calculator functionality
-        function calculateOnTime() {
-            const sleepHours = parseFloat(document.getElementById('sleepHours').value) || 7;
-            const workHours = parseFloat(document.getElementById('workHours').value) || 0;
-            
-            // Calculate minutes for work days
-            const sleepMinutes = sleepHours * 60;
-            const workMinutes = workHours * 60;
-            const ontimeMinutes = 1440 - sleepMinutes - workMinutes;
-            const ontimeHours = (ontimeMinutes / 60).toFixed(1);
-            
-            // Calculate realistic weekly total: 5 work days + 2 weekend days
-            const weekendTokens = 1440 - (sleepHours * 60); // Weekend: just sleep, no work
-            const weeklyTokens = (ontimeMinutes * 5) + (weekendTokens * 2);
-            const weeklyHours = (weeklyTokens / 60).toFixed(0);
-            
-            // Calculate 20% AI allocation
-            const dailyAI = Math.round(ontimeMinutes * 0.2);
-            const weeklyAI = Math.round(weeklyTokens * 0.2);
-            
-            // Update ON-TIME calculator display
-            const sleepMinutesEl = document.getElementById('sleepMinutes');
-            const workMinutesEl = document.getElementById('workMinutes');
-            const ontimeTokensEl = document.getElementById('ontimeTokens');
-            const ontimeHoursEl = document.getElementById('ontimeHours');
-            const weeklyTokensEl = document.getElementById('weeklyTokens');
-            const dailyAIEl = document.getElementById('dailyAI');
-            const weeklyAIEl = document.getElementById('weeklyAI');
-            
-            if (sleepMinutesEl) sleepMinutesEl.textContent = sleepMinutes;
-            if (workMinutesEl) workMinutesEl.textContent = workMinutes;
-            if (ontimeTokensEl) ontimeTokensEl.textContent = Math.max(0, ontimeMinutes);
-            if (ontimeHoursEl) ontimeHoursEl.textContent = Math.max(0, ontimeHours);
-            if (weeklyTokensEl) weeklyTokensEl.textContent = Math.max(0, weeklyTokens).toLocaleString();
-            if (dailyAIEl) dailyAIEl.textContent = Math.max(0, dailyAI);
-            if (weeklyAIEl) weeklyAIEl.textContent = Math.max(0, weeklyAI).toLocaleString();
-            
-            // Update Brutal Reality Check display
-            const brutalWeeklyTokensEl = document.getElementById('brutalWeeklyTokens');
-            const brutalWorkHoursEl = document.getElementById('brutalWorkHours');
-            const brutalSleepHoursEl = document.getElementById('brutalSleepHours');
-            const brutalWeeklyDisplayEl = document.getElementById('brutalWeeklyDisplay');
-            const brutalHoursDisplayEl = document.getElementById('brutalHoursDisplay');
-            const brutalAIDisplayEl = document.getElementById('brutalAIDisplay');
-            
-            if (brutalWeeklyTokensEl) brutalWeeklyTokensEl.textContent = Math.max(0, weeklyTokens).toLocaleString();
-            if (brutalWorkHoursEl) brutalWorkHoursEl.textContent = workHours;
-            if (brutalSleepHoursEl) brutalSleepHoursEl.textContent = sleepHours;
-            if (brutalWeeklyDisplayEl) brutalWeeklyDisplayEl.textContent = Math.max(0, weeklyTokens).toLocaleString();
-            if (brutalHoursDisplayEl) brutalHoursDisplayEl.textContent = Math.max(0, weeklyHours);
-            if (brutalAIDisplayEl) brutalAIDisplayEl.textContent = Math.max(0, weeklyAI).toLocaleString();
-            
-            // Update Revolution section with live numbers (except daily which is real-time countdown)
-            const revolutionWeeklyEl = document.getElementById('revolutionWeekly');
-            const revolutionMonthlyEl = document.getElementById('revolutionMonthly');
-            const revolutionAnnualEl = document.getElementById('revolutionAnnual');
-            
-            if (revolutionWeeklyEl) revolutionWeeklyEl.textContent = Math.max(0, weeklyTokens).toLocaleString();
-            if (revolutionMonthlyEl) revolutionMonthlyEl.textContent = Math.max(0, Math.round(weeklyTokens * 4.33)).toLocaleString();
-            if (revolutionAnnualEl) revolutionAnnualEl.textContent = Math.max(0, weeklyTokens * 52).toLocaleString();
-        }
-
-        // Add event listeners for calculator inputs
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('sleepHours').addEventListener('input', calculateOnTime);
-            document.getElementById('workHours').addEventListener('input', calculateOnTime);
-            calculateOnTime(); // Initial calculation
+      if(resetLink){
+        resetLink.addEventListener('click', function(){
+          successPanel.classList.remove('show');
+          form.classList.remove('hide');
+          document.getElementById('email').focus();
         });
-
-        // Update every minute
-        updateCountdown();
-        setInterval(updateCountdown, 60000);
-
-        // Add some interactive elements for mobile
-        document.querySelectorAll('.stat-box').forEach(box => {
-            box.addEventListener('touchstart', function() {
-                this.style.transform = 'translateY(-5px) scale(1.02)';
-            });
-            box.addEventListener('touchend', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-            box.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px) scale(1.02)';
-            });
-            box.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-
-        // Prevent zoom on double tap for better mobile experience
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
-            var now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-    </script>
+      }
+    })();
+  </script>
 </body>
 </html>
